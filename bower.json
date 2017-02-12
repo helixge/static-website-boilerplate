@@ -1,0 +1,24 @@
+{
+  "name": "helixboilerplate",
+  "description": "",
+  "main": "index.html",
+  "authors": [
+    "To Ka <toka@helix.ge>"
+  ],
+  "private": true,
+  "license": "ISC",
+  "homepage": "https://github.com/helixgroup/static-website-boilerplate",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+	"jquery": "^3.1.1",
+	"underscore": "^1.8.3",
+	"helix.jquery-equalheights": "https://github.com/helixgroup/jquery-equalheights.git",
+	"bootstrap-sass": "^3.3.7"
+  }
+}
