@@ -105,7 +105,11 @@ gulp.task('webserver', ['default'], function(){
     }));     
 });
 
-gulp.task('default', ['styles', 'html', 'js'], function() {
+gulp.task('process', ['styles', 'html', 'js'], function() {
+	
+});
+
+gulp.task('default', ['process'], function() {
     gulp.watch('./m/_scss/**/*', ['styles']);
     gulp.watch('./m/_templates/**/*', ['html']);
     gulp.watch('./m/i/_spritesource/**/*', ['sprite']);
