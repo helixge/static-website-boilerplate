@@ -11,6 +11,11 @@ var uglify = require('gulp-uglify');
 var webserver = require('gulp-webserver');
 var argv = require('yargs').argv;
 var gulpif = require('gulp-if');
+//var ts = require("gulp-typescript");
+//var tsProject = ts.createProject("tsconfig.json");
+var browserify = require("browserify");
+var source = require('vinyl-source-stream');
+var tsify = require("tsify");
 
 var settings = {
 	build: {
@@ -20,7 +25,7 @@ var settings = {
 }
 
 gulp.task('styles', ['sprite'], function () {
-	gulp.src([
+	return gulp.src([
 		'./m/_scss/**/*.scss'
 	])
 		.pipe(sass().on('error', sass.logError))
@@ -31,7 +36,7 @@ gulp.task('styles', ['sprite'], function () {
 });
 
 gulp.task('html', function () {
-	gulp.src('./m/_templates/*.html')
+	return gulp.src('./m/_templates/*.html')
 		.pipe(nunjucks({
 			searchPaths: ['./m/_templates'],
 			tags: {
@@ -46,8 +51,26 @@ gulp.task('html', function () {
 		.pipe(gulp.dest('./'));
 });
 
+gulp.task('ts', function () {
+	// return tsProject.src()
+	// 	.pipe(tsProject())
+	// 	.js.pipe(gulp.dest("dist"));
+
+	return browserify({
+        basedir: './m/_tsapp',
+        debug: false,
+        entries: ['app.ts'],
+        cache: {},
+        packageCache: {}
+    })
+    .plugin(tsify)
+    .bundle()
+    .pipe(source('app.min.js'))
+    .pipe(gulp.dest("./m/js"));
+});
+
 gulp.task('js-pre', function () {
-	gulp.src([
+	return gulp.src([
 		'./m/_vendor/jquery/dist/jquery.min.js',
 		'./m/_vendor/bootstrap-sass/assets/javascripts/bootstrap.min.js',
 		'./m/_vendor/helix.jquery-equalheights/src/jquery.equalheights.js',
@@ -62,7 +85,7 @@ gulp.task('js-pre', function () {
 });
 
 gulp.task('js-post', function () {
-	gulp.src([
+	return gulp.src([
 		'./m/js/app/post/**/*.js',
 	])
 		.pipe(gulpif(!settings.build.prod, sourcemaps.init()))
