@@ -3,3 +3,5 @@ m/_vendor
 bin
 obj
 .vs
+
+yarn.lock
