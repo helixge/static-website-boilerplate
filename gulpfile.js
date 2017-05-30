@@ -11,11 +11,10 @@ var uglify = require('gulp-uglify');
 var webserver = require('gulp-webserver');
 var argv = require('yargs').argv;
 var gulpif = require('gulp-if');
-//var ts = require("gulp-typescript");
-//var tsProject = ts.createProject("tsconfig.json");
 var browserify = require("browserify");
 var source = require('vinyl-source-stream');
 var tsify = require("tsify");
+var buffer = require('vinyl-buffer');
 
 var settings = {
 	build: {
@@ -23,6 +22,8 @@ var settings = {
 		version: parseInt(Math.random() * 10000000) + "-" + parseInt(Math.random() * 10000000)
 	}
 }
+
+console.log('Production mode: ', settings.build.prod);
 
 gulp.task('styles', ['sprite'], function () {
 	return gulp.src([
@@ -57,16 +58,20 @@ gulp.task('ts', function () {
 	// 	.js.pipe(gulp.dest("dist"));
 
 	return browserify({
-        basedir: './m/_tsapp',
-        debug: false,
-        entries: ['app.ts'],
-        cache: {},
-        packageCache: {}
-    })
-    .plugin(tsify)
-    .bundle()
-    .pipe(source('app.min.js'))
-    .pipe(gulp.dest("./m/js"));
+		basedir: './m/_tsapp',
+		debug: false,
+		entries: ['app.ts'],
+		cache: {},
+		packageCache: {}
+	})
+		.plugin(tsify)
+		.bundle()
+		.pipe(source('app.min.js'))
+		.pipe(buffer())
+		.pipe(gulpif(!settings.build.prod, sourcemaps.init()))
+		.pipe(gulpif(settings.build.prod, uglify()))
+		.pipe(gulpif(!settings.build.prod, sourcemaps.write('./')))
+		.pipe(gulp.dest("./m/js"));
 });
 
 gulp.task('js-pre', function () {
@@ -79,7 +84,7 @@ gulp.task('js-pre', function () {
 	])
 		.pipe(gulpif(!settings.build.prod, sourcemaps.init()))
 		.pipe(concat('pre.min.js'))
-		.pipe(gulpif(!settings.build.prod, uglify()))
+		.pipe(gulpif(settings.build.prod, uglify()))
 		.pipe(gulpif(!settings.build.prod, sourcemaps.write('./')))
 		.pipe(gulp.dest('./m/js/'));
 });
@@ -90,12 +95,12 @@ gulp.task('js-post', function () {
 	])
 		.pipe(gulpif(!settings.build.prod, sourcemaps.init()))
 		.pipe(concat('post.min.js'))
-		.pipe(gulpif(!settings.build.prod, uglify()))
+		.pipe(gulpif(settings.build.prod, uglify()))
 		.pipe(gulpif(!settings.build.prod, sourcemaps.write('./')))
 		.pipe(gulp.dest('./m/js/'));
 });
 
-gulp.task('js', ['js-pre', 'js-post'], function () { });
+gulp.task('js', ['ts', 'js-pre', 'js-post'], function () { });
 
 gulp.task('sprite', function () {
 	var spriteData = gulp.src('./m/i/_spritesource/**/*.png')
