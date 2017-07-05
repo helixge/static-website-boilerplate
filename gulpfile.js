@@ -78,7 +78,7 @@ gulp.task('js-pre', function () {
 	return gulp.src([
 		'./m/_vendor/jquery/dist/jquery.min.js',
 		'./m/_vendor/bootstrap-sass/assets/javascripts/bootstrap.min.js',
-		'./m/_vendor/helix.jquery-equalheights/src/jquery.equalheights.js',
+		'./m/_vendor/helix.jquery.equal-heights/src/jquery.equal-heights.js',
 		'./m/_vendor/underscore/underscore-min.js',
 		'./m/js/app/pre/**/*.js'
 	])
