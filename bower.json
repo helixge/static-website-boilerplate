@@ -18,7 +18,7 @@
   "dependencies": {
 	"jquery": "^3.1.1",
 	"underscore": "^1.8.3",
-	"helix.jquery-equalheights": "https://github.com/helixgroup/jquery-equalheights.git",
+	"helix.jquery.equal-heights": "https://github.com/helixgroup/jquery.equal-heights.git",
 	"bootstrap-sass": "^3.3.7"
   }
 }
