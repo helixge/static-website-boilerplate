@@ -15,6 +15,7 @@ var browserify = require("browserify");
 var source = require('vinyl-source-stream');
 var tsify = require("tsify");
 var buffer = require('vinyl-buffer');
+var urlAdjuster = require('gulp-css-url-adjuster');
 
 var settings = {
 	build: {
@@ -30,6 +31,12 @@ gulp.task('styles', ['sprite'], function () {
 		'./m/_scss/**/*.scss'
 	])
 		.pipe(sass().on('error', sass.logError))
+		.pipe(concat('site.min.css'))
+		.pipe(urlAdjuster({
+			prepend: '',
+		    append: '',
+		    replace:  ['../fonts/','../f/'],
+		}))
 		.pipe(gulpif(!settings.build.prod, sourcemaps.init()))
 		.pipe(cleanCSS())
 		.pipe(gulpif(!settings.build.prod, sourcemaps.write()))
@@ -72,6 +79,12 @@ gulp.task('ts', function () {
 		.pipe(gulpif(settings.build.prod, uglify()))
 		.pipe(gulpif(!settings.build.prod, sourcemaps.write('./')))
 		.pipe(gulp.dest("./m/js"));
+});
+
+gulp.task('webfonts', function() {
+	return gulp.src([
+	])
+	.pipe(gulp.dest('./m/f/'));
 });
 
 gulp.task('js-pre', function () {
@@ -141,7 +154,7 @@ gulp.task('webserver', ['default'], function () {
 		}));
 });
 
-gulp.task('process', ['styles', 'html', 'js'], function () { });
+gulp.task('process', ['webfonts', 'styles', 'html', 'js'], function () { });
 
 gulp.task('default', ['process'], function () {
 	gulp.watch('./m/_scss/**/*', ['styles']);
