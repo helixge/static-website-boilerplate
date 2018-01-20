@@ -7,7 +7,7 @@
   ],
   "private": true,
   "license": "ISC",
-  "homepage": "https://github.com/helixgroup/static-website-boilerplate",
+  "homepage": "https://github.com/helixge/static-website-boilerplate",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -18,7 +18,7 @@
   "dependencies": {
 	"jquery": "^3.1.1",
 	"underscore": "^1.8.3",
-	"helix.jquery.equal-heights": "https://github.com/helixgroup/jquery.equal-heights.git",
+	"helix.jquery.equal-heights": "https://github.com/helixge/jquery.equal-heights.git",
 	"bootstrap-sass": "^3.3.7"
   }
 }
