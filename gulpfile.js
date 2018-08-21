@@ -14,7 +14,7 @@ var urlAdjuster = require('gulp-css-url-adjuster');
 
 var settings = {
 	build: {
-		prod: argv.production || argv.prod,
+		prod: !!(argv.production || argv.prod),
 		version: parseInt(Math.random() * 10000000) + "-" + parseInt(Math.random() * 10000000)
 	}
 }
