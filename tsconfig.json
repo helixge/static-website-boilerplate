@@ -1,9 +1,0 @@
-{
-    "files": [
-        "./m/_tsapp/app.ts"
-    ],
-    "compilerOptions": {
-        "noImplicitAny": true,
-        "target": "es5"
-    }
-}

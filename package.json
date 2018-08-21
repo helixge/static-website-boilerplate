@@ -21,13 +21,10 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.2.0",
     "gulp-sourcemaps": "^1.9.1",
-    "gulp-typescript": "^3.1.7",
     "gulp-uglify": "^2.0.0",
     "gulp-webserver": "^0.9.1",
     "gulp.spritesmith": "^6.2.0",
     "merge-stream": "^1.0.0",
-    "tsify": "^3.0.1",
-    "typescript": "^2.3.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "yargs": "^8.0.1"

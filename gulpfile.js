@@ -6,15 +6,10 @@ var merge = require('merge-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
-var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var webserver = require('gulp-webserver');
 var argv = require('yargs').argv;
 var gulpif = require('gulp-if');
-var browserify = require("browserify");
-var source = require('vinyl-source-stream');
-var tsify = require("tsify");
-var buffer = require('vinyl-buffer');
 var urlAdjuster = require('gulp-css-url-adjuster');
 
 var settings = {
@@ -59,28 +54,6 @@ gulp.task('html', function () {
 		.pipe(gulp.dest('./'));
 });
 
-gulp.task('ts', function () {
-	// return tsProject.src()
-	// 	.pipe(tsProject())
-	// 	.js.pipe(gulp.dest("dist"));
-
-	return browserify({
-		basedir: './m/_tsapp',
-		debug: false,
-		entries: ['app.ts'],
-		cache: {},
-		packageCache: {}
-	})
-		.plugin(tsify)
-		.bundle()
-		.pipe(source('app.min.js'))
-		.pipe(buffer())
-		.pipe(gulpif(!settings.build.prod, sourcemaps.init()))
-		.pipe(gulpif(settings.build.prod, uglify()))
-		.pipe(gulpif(!settings.build.prod, sourcemaps.write('./')))
-		.pipe(gulp.dest("./m/js"));
-});
-
 gulp.task('webfonts', function() {
 	return gulp.src([
 	])
@@ -113,7 +86,7 @@ gulp.task('js-post', function () {
 		.pipe(gulp.dest('./m/js/'));
 });
 
-gulp.task('js', ['ts', 'js-pre', 'js-post'], function () { });
+gulp.task('js', ['js-pre', 'js-post'], function () { });
 
 gulp.task('sprite', function () {
 	var spriteData = gulp.src('./m/i/_spritesource/**/*.png')
