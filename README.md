@@ -8,15 +8,30 @@ After pulling the repository run the following commands:
 1. bower install
 2. yarn install
 
-## Main Tasks
+## Primary Tasks
 
-### gulp process
-runs all gulp tasks once
+### Process once
+```
+gulp process
+```
+runs the default gulp tasks with all subtasks only once
 
-### gulp
-runs all gulp tasks and executes a watcher for css and js changes
+### Process and run the watcher
+```
+gulp
+```
+runs the default gulp task with all subtasks and executes a watcher for css and js changes
 
-### gulp webserver
-runs all gulp tasks, executes a watcher for css and js changes and runs the webserver
+### Run a webserver and watch
+```
+gulp webserver
+```
+runs the default gulp task with all subtasks, executes a watcher for CSS and JS changes and runs the webserver
 
+## Additional parameters
 
+### Run production build
+```
+--prod
+```
+By adding `--prod` argunebt to any task, additional minification processing will be applied to JS and CSS
