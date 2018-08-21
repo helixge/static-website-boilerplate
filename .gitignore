@@ -3,3 +3,4 @@ m/_vendor
 bin
 obj
 .vs
+/*.html
