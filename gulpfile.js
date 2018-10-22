@@ -112,7 +112,7 @@ gulp.task('default', ['process'], function () {
 	gulp.watch('./m/i/_spritesource/**/*', ['sprite']);
 	gulp.watch('./m/js/app/**/*', ['js']);
 });
-gulp.task('enable-production-mode', function () {
+gulp.task('util.enable-production-mode', function () {
 	settings.build.prod = true;	
 	log.info('Production mode has been set to: ', settings.build.prod);
 });
@@ -137,4 +137,4 @@ gulp.task('webserver', ['default'], function () {
 });
 
 // Visual studio publishing pre-build tasks
-gulp.task('process-production-publish', ['enable-production-mode', 'process'], function () { });
+gulp.task('prod.publish', ['util.enable-production-mode', 'process'], function () { });
