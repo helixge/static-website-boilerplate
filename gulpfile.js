@@ -44,6 +44,9 @@ gulp.task('html', function () {
 	return gulp.src('./m/_templates/*.html')
 		.pipe(nunjucks({
 			searchPaths: ['./m/_templates'],
+			locals: {
+				'build_version': settings.build.version
+			},
 			tags: {
 				blockStart: '<%',
 				blockEnd: '%>',
