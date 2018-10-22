@@ -23,7 +23,7 @@ var settings = {
 log.info('Production mode: ', settings.build.prod);
 
 
-// Processing and Utility Tasks
+// Processing and utility tasks
 gulp.task('styles', ['sprite'], function () {
 	return gulp.src([
 		'./m/_scss/**/*.scss'
@@ -60,7 +60,7 @@ gulp.task('webfonts', function() {
 	])
 	.pipe(gulp.dest('./m/f/'));
 });
-gulp.task('js-pre', function () {
+gulp.task('js.pre', function () {
 	return gulp.src([
 		'./node_modules/jquery/dist/jquery.min.js',
 		'./node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js',
@@ -74,7 +74,7 @@ gulp.task('js-pre', function () {
 		.pipe(gulpif(!settings.build.prod, sourcemaps.write('./')))
 		.pipe(gulp.dest('./m/js/'));
 });
-gulp.task('js-post', function () {
+gulp.task('js.post', function () {
 	return gulp.src([
 		'./m/js/app/post/**/*.js',
 	])
@@ -84,7 +84,7 @@ gulp.task('js-post', function () {
 		.pipe(gulpif(!settings.build.prod, sourcemaps.write('./')))
 		.pipe(gulp.dest('./m/js/'));
 });
-gulp.task('js', ['js-pre', 'js-post'], function () { });
+gulp.task('js', ['js.pre', 'js.post'], function () { });
 gulp.task('sprite', function () {
 	var spriteData = gulp.src('./m/i/_spritesource/**/*.png')
 		.pipe(spritesmith({
