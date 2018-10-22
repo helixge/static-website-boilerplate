@@ -11,6 +11,7 @@ var webserver = require('gulp-webserver');
 var argv = require('yargs').argv;
 var gulpif = require('gulp-if');
 var urlAdjuster = require('gulp-css-url-adjuster');
+var log = require('fancy-log');
 
 var settings = {
 	build: {
@@ -19,8 +20,10 @@ var settings = {
 	}
 }
 
-console.log('Production mode: ', settings.build.prod);
+log.info('Production mode: ', settings.build.prod);
 
+
+// Processing and Utility Tasks
 gulp.task('styles', ['sprite'], function () {
 	return gulp.src([
 		'./m/_scss/**/*.scss'
@@ -37,7 +40,6 @@ gulp.task('styles', ['sprite'], function () {
 		.pipe(gulpif(!settings.build.prod, sourcemaps.write()))
 		.pipe(gulp.dest('./m/css'));
 });
-
 gulp.task('html', function () {
 	return gulp.src('./m/_templates/*.html')
 		.pipe(nunjucks({
@@ -53,13 +55,11 @@ gulp.task('html', function () {
 		}))
 		.pipe(gulp.dest('./'));
 });
-
 gulp.task('webfonts', function() {
 	return gulp.src([
 	])
 	.pipe(gulp.dest('./m/f/'));
 });
-
 gulp.task('js-pre', function () {
 	return gulp.src([
 		'./node_modules/jquery/dist/jquery.min.js',
@@ -74,7 +74,6 @@ gulp.task('js-pre', function () {
 		.pipe(gulpif(!settings.build.prod, sourcemaps.write('./')))
 		.pipe(gulp.dest('./m/js/'));
 });
-
 gulp.task('js-post', function () {
 	return gulp.src([
 		'./m/js/app/post/**/*.js',
@@ -85,9 +84,7 @@ gulp.task('js-post', function () {
 		.pipe(gulpif(!settings.build.prod, sourcemaps.write('./')))
 		.pipe(gulp.dest('./m/js/'));
 });
-
 gulp.task('js', ['js-pre', 'js-post'], function () { });
-
 gulp.task('sprite', function () {
 	var spriteData = gulp.src('./m/i/_spritesource/**/*.png')
 		.pipe(spritesmith({
@@ -108,7 +105,19 @@ gulp.task('sprite', function () {
 
 	return merge(imgStream, cssStream);
 });
+gulp.task('process', ['webfonts', 'styles', 'html', 'js'], function () { });
+gulp.task('default', ['process'], function () {
+	gulp.watch('./m/_scss/**/*', ['styles']);
+	gulp.watch('./m/_templates/**/*', ['html']);
+	gulp.watch('./m/i/_spritesource/**/*', ['sprite']);
+	gulp.watch('./m/js/app/**/*', ['js']);
+});
+gulp.task('enable-production-mode', function () {
+	settings.build.prod = true;	
+	log.info('Production mode has been set to: ', settings.build.prod);
+});
 
+// Development tasks
 gulp.task('webserver', ['default'], function () {
 	gulp.src('./')
 		.pipe(webserver({
@@ -127,11 +136,5 @@ gulp.task('webserver', ['default'], function () {
 		}));
 });
 
-gulp.task('process', ['webfonts', 'styles', 'html', 'js'], function () { });
-
-gulp.task('default', ['process'], function () {
-	gulp.watch('./m/_scss/**/*', ['styles']);
-	gulp.watch('./m/_templates/**/*', ['html']);
-	gulp.watch('./m/i/_spritesource/**/*', ['sprite']);
-	gulp.watch('./m/js/app/**/*', ['js']);
-});
+// Visual studio publishing pre-build tasks
+gulp.task('process-production-publish', ['enable-production-mode', 'process'], function () { });
