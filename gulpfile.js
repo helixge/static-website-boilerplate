@@ -62,10 +62,10 @@ gulp.task('webfonts', function() {
 
 gulp.task('js-pre', function () {
 	return gulp.src([
-		'./m/_vendor/jquery/dist/jquery.min.js',
-		'./m/_vendor/bootstrap-sass/assets/javascripts/bootstrap.min.js',
-		'./m/_vendor/helix.jquery.equal-heights/src/jquery.equal-heights.js',
-		'./m/_vendor/underscore/underscore-min.js',
+		'./node_modules/jquery/dist/jquery.min.js',
+		'./node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js',
+		'./node_modules/jquery.equal-heights/src/jquery.equal-heights.js',
+		'./node_modules/underscore/underscore-min.js',
 		'./m/js/app/pre/**/*.js'
 	])
 		.pipe(gulpif(!settings.build.prod, sourcemaps.init()))
@@ -133,6 +133,5 @@ gulp.task('default', ['process'], function () {
 	gulp.watch('./m/_scss/**/*', ['styles']);
 	gulp.watch('./m/_templates/**/*', ['html']);
 	gulp.watch('./m/i/_spritesource/**/*', ['sprite']);
-	gulp.watch('./m/_vendor/**/*', ['js']);
 	gulp.watch('./m/js/app/**/*', ['js']);
 });
