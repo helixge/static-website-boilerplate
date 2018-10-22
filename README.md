@@ -3,10 +3,10 @@ Boilerplate template for new websites
 
 
 ## Initialization
-After pulling the repository run the following commands:
-
-1. bower install
-2. yarn install
+After pulling the repository run the following command:
+```
+yarn install
+```
 
 ## Primary Tasks
 
