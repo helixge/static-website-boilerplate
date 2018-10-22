@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title><$ pageTitle $></title>
-    <link rel="stylesheet" href="m/css/site.min.css" />
-    <script type="text/javascript" src="m/js/pre.min.js"></script>
+    <link rel="stylesheet" href="m/css/site.min.css?<$ build_version $>" />
+    <script type="text/javascript" src="m/js/pre.min.js?<$ build_version $>"></script>
 </head>
 <body class="<$ pageCssClass $> <$ lang $>">
 	<% block content %>
 	<% endblock %>
-	<script type="text/javascript" src="m/js/post.min.js"></script>
+	<script type="text/javascript" src="m/js/post.min.js?<$ build_version $>"></script>
 </body>
 </html>
