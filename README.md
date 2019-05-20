@@ -34,4 +34,4 @@ runs the default gulp task with all subtasks, executes a watcher for CSS and JS 
 ```
 --prod
 ```
-By adding `--prod` argunebt to any task, additional minification processing will be applied to JS and CSS
+By adding `--prod` argument to any task, minification processing will be applied to JS and CSS outpts.
