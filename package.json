@@ -8,7 +8,7 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "bootstrap": "^4.3.1",
     "browserify": "^16.2.3",
     "fancy-log": "^1.3.3",
@@ -24,20 +24,18 @@
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
-    "gulp-uglify": "^3.0.2",
+    "gulp-svg-sprite": "^1.5.0",
+    "gulp-uglify-es": "^2.0.0",
     "gulp-webserver": "^0.9.1",
     "gulp.spritesmith": "^6.9.0",
     "jquery": "^3.3.1",
     "jquery.equal-heights": "https://github.com/helixge/jquery.equal-heights.git",
     "merge-stream": "^1.0.1",
+    "slick-carousel": "^1.8.1",
+    "svg4everybody": "^2.1.9",
     "underscore": "^1.9.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
     "yargs": "^13.2.2"
-  },
-  "dependencies": {
-    "gulp-svg-sprite": "^1.5.0",
-    "slick-carousel": "^1.8.1",
-    "svg4everybody": "^2.1.9"
   }
 }
