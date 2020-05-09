@@ -3,7 +3,6 @@ var svgSprite = require('gulp-svg-sprite');
 var sass = require('gulp-sass');
 var nunjucks = require('gulp-nunjucks-html');
 var spritesmith = require('gulp.spritesmith');
-var merge = require('merge-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
@@ -13,6 +12,7 @@ var argv = require('yargs').argv;
 var gulpif = require('gulp-if');
 var urlAdjuster = require('gulp-css-url-adjuster');
 var log = require('fancy-log');
+var babel = require('gulp-babel');
 
 var settings = {
 	build: {
@@ -74,31 +74,47 @@ gulp.task('js.pre', function () {
 	return gulp.src([
 		'./node_modules/jquery/dist/jquery.min.js',
 		'./node_modules/bootstrap/dist/js/bootstrap.min.js',
-		'./node_modules/jquery.equal-heights/src/jquery.equal-heights.js',
-		'./node_modules/underscore/underscore-min.js',
 		'./node_modules/svg4everybody/dist/svg4everybody.min.js',
-		'./node_modules/slick-carousel/slick/slick.min.js',
-		'./m/js/app/pre/**/*.js'
+
+		'./node_modules/@babel/polyfill/dist/polyfill.min.js',
+        './node_modules/axios/dist/axios.min.js',
+        './node_modules/vue/dist/vue.min.js',
+        './m/js/app/pre/**/*.js'
 	])
-		.pipe(gulpif(!settings.build.prod, sourcemaps.init()))
 		.pipe(concat('pre.min.js'))
+        .pipe(sourcemaps.init())
 		.pipe(gulpif(settings.build.prod, uglify()))
-		.pipe(gulpif(!settings.build.prod, sourcemaps.write('./')))
+        .pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest('./m/js/'));
 });
 gulp.task('js.post', function () {
 	return gulp.src([
+        //'./m/js/app/services/**/*.js',
+        //'./m/js/app/vue/directives/**/*.js',
+        //'./m/js/app/vue/components/**/*.js',
+        //'./m/js/app/vue/filters/**/*.js',
+        //'./m/js/app/vue/app.js',
 		'./m/js/app/post/**/*.js',
 	])
-		.pipe(gulpif(!settings.build.prod, sourcemaps.init()))
 		.pipe(concat('post.min.js'))
+        .pipe(sourcemaps.init())
+        .pipe(babel({
+            "plugins": ['@babel/plugin-transform-template-literals'],
+            "presets": [
+                [
+                    "@babel/preset-env",
+                    {
+                        "targets": "> 0.25%, not dead"
+                    }
+                ]
+            ]
+        }))
 		.pipe(gulpif(settings.build.prod, uglify()))
-		.pipe(gulpif(!settings.build.prod, sourcemaps.write('./')))
+        .pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest('./m/js/'));
 });
 gulp.task('styles', /*gulp.series('sprite',*/ function () {
 	return gulp.src([
-		'./node_modules/slick-carousel/slick/slick.scss',
 		'./m/_scss/**/*.scss'
 	])
 		.pipe(sass().on('error', sass.logError))
@@ -108,9 +124,9 @@ gulp.task('styles', /*gulp.series('sprite',*/ function () {
 		    append: '',
 		    replace:  ['../fonts/','../f/'],
 		}))
-		.pipe(gulpif(!settings.build.prod, sourcemaps.init()))
+        .pipe(sourcemaps.init())
 		.pipe(cleanCSS())
-		.pipe(gulpif(!settings.build.prod, sourcemaps.write()))
+        .pipe(sourcemaps.write())
 		.pipe(gulp.dest('./m/css'));
 });
 gulp.task('js', gulp.series('js.pre', 'js.post', function (done) { done(); }));
