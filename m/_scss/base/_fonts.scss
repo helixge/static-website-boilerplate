@@ -1,14 +1,12 @@
 $fonts:
-    'LB Nus Normal' '../f/liberty-nus-regular-webfont' 400 normal 'lbnusnormal',
-    'LB Nus Medium' '../f/liberty-nus-medium-webfont' 500 normal 'lbnusmedium',
-    'LB MT Medium' '../f/liberty-mt-medium-webfont' 500 normal 'lbmtmedium',
-    'LB MT Bold' '../f/liberty-mt-bold-webfont' 700 normal 'lbmtbold';
+    'Font Family' 'path' weight style 'nameshorthand';
 
 @each $font in $fonts {
     @font-face {
         font-family: nth($font, 1);
         src: url(nth($font, 2) + '.woff2') format("woff2"),
-             url(nth($font, 2) + '.woff') format("woff");
+             url(nth($font, 2) + '.woff') format("woff")
+             url(nth($font, 2) + '.format') format("format");
         font-weight: nth($font, 3);
         font-style: nth($font, 4);
         font-display: swap;
