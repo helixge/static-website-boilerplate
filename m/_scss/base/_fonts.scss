@@ -1,5 +1,7 @@
 $fonts:
-    'Font Family' 'path' weight style 'nameshorthand';
+    'Font Family' 'path1' weight1 style1,
+	'Font Family' 'path2' weight2 style2;
+	
 
 @each $font in $fonts {
     @font-face {
