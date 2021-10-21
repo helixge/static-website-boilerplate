@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var svgSprite = require('gulp-svg-sprite');
-var sass = require('gulp-sass');
+var sass = require('gulp-sass')(require('sass'));
 var nunjucks = require('gulp-nunjucks-html');
 var spritesmith = require('gulp.spritesmith');
 var sourcemaps = require('gulp-sourcemaps');
