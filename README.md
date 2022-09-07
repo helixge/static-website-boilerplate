@@ -5,7 +5,7 @@ Boilerplate template for new websites
 ## Initialization
 After pulling the repository run the following command:
 ```
-yarn install
+npm install
 ```
 
 ## Primary Tasks
